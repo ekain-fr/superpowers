@@ -180,3 +180,12 @@ Or invoke directly:
 4. **jq with grep/sed fallback:** Handles systems without jq installed
 5. **Git Bash for Windows:** Avoids maintaining separate PowerShell implementation
 6. **No expiration:** State file overwritten by next brainstorm cycle; keeps logic simple
+
+## Recommended .gitignore Addition
+
+Projects using this feature should add to their `.gitignore`:
+
+```
+# Superpowers pending execution state
+docs/plans/.pending-execution.json
+```
