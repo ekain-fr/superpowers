@@ -17,12 +17,20 @@ Git worktrees create isolated workspaces sharing the same repository, allowing w
 
 Follow this priority order:
 
+### 0. Resolve Repository Root
+
+**Always start by finding the repo root** - worktrees belong at the repository root, not the current working directory:
+
+```bash
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+```
+
 ### 1. Check Existing Directories
 
 ```bash
-# Check in priority order
-ls -d .worktrees 2>/dev/null     # Preferred (hidden)
-ls -d worktrees 2>/dev/null      # Alternative
+# Check in priority order (at repo root)
+ls -d "$REPO_ROOT/.worktrees" 2>/dev/null     # Preferred (hidden)
+ls -d "$REPO_ROOT/worktrees" 2>/dev/null      # Alternative
 ```
 
 **If found:** Use that directory. If both exist, `.worktrees` wins.
@@ -30,7 +38,7 @@ ls -d worktrees 2>/dev/null      # Alternative
 ### 2. Check CLAUDE.md
 
 ```bash
-grep -i "worktree.*director" CLAUDE.md 2>/dev/null
+grep -i "worktree.*director" "$REPO_ROOT/CLAUDE.md" 2>/dev/null
 ```
 
 **If preference specified:** Use it without asking.
@@ -56,6 +64,8 @@ Which would you prefer?
 
 ```bash
 # Check if directory is ignored (respects local, global, and system gitignore)
+# Run from repo root to ensure correct path resolution
+cd "$REPO_ROOT"
 git check-ignore -q .worktrees 2>/dev/null || git check-ignore -q worktrees 2>/dev/null
 ```
 
@@ -83,13 +93,13 @@ project=$(basename "$(git rev-parse --show-toplevel)")
 ### 2. Create Worktree
 
 ```bash
-# Determine full path
+# Determine full path (always relative to repo root for project-local)
 case $LOCATION in
   .worktrees|worktrees)
-    path="$LOCATION/$BRANCH_NAME"
+    path="$REPO_ROOT/$LOCATION/$BRANCH_NAME"
     ;;
   ~/.config/superpowers/worktrees/*)
-    path="~/.config/superpowers/worktrees/$project/$BRANCH_NAME"
+    path="$HOME/.config/superpowers/worktrees/$project/$BRANCH_NAME"
     ;;
 esac
 
@@ -145,6 +155,7 @@ Ready to implement <feature-name>
 
 | Situation | Action |
 |-----------|--------|
+| Started in subdirectory | Resolve repo root first, create worktree there |
 | `.worktrees/` exists | Use it (verify ignored) |
 | `worktrees/` exists | Use it (verify ignored) |
 | Both exist | Use `.worktrees/` |
@@ -154,6 +165,11 @@ Ready to implement <feature-name>
 | No package.json/Cargo.toml | Skip dependency install |
 
 ## Common Mistakes
+
+### Creating worktrees in subdirectories
+
+- **Problem:** Starting in a subdirectory creates `.worktrees/` there instead of repo root
+- **Fix:** Always resolve `REPO_ROOT` first and create worktrees relative to it
 
 ### Skipping ignore verification
 
@@ -180,9 +196,10 @@ Ready to implement <feature-name>
 ```
 You: I'm using the using-git-worktrees skill to set up an isolated workspace.
 
-[Check .worktrees/ - exists]
+[Resolve repo root: /Users/jesse/myproject]
+[Check /Users/jesse/myproject/.worktrees/ - exists]
 [Verify ignored - git check-ignore confirms .worktrees/ is ignored]
-[Create worktree: git worktree add .worktrees/auth -b feature/auth]
+[Create worktree: git worktree add /Users/jesse/myproject/.worktrees/auth -b feature/auth]
 [Run npm install]
 [Run npm test - 47 passing]
 
@@ -191,9 +208,12 @@ Tests passing (47 tests, 0 failures)
 Ready to implement auth feature
 ```
 
+**Note:** Even if started from `/Users/jesse/myproject/packages/frontend/`, the worktree is created at the repo root.
+
 ## Red Flags
 
 **Never:**
+- Create worktree relative to current directory (always use repo root)
 - Create worktree without verifying it's ignored (project-local)
 - Skip baseline test verification
 - Proceed with failing tests without asking
@@ -201,6 +221,7 @@ Ready to implement auth feature
 - Skip CLAUDE.md check
 
 **Always:**
+- Resolve repo root first with `git rev-parse --show-toplevel`
 - Follow directory priority: existing > CLAUDE.md > ask
 - Verify directory is ignored for project-local
 - Auto-detect and run project setup
