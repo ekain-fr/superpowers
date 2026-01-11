@@ -107,9 +107,25 @@ After saving the plan, offer execution choice:
 **Which approach?"**
 
 **If Subagent-Driven chosen:**
-- **REQUIRED SUB-SKILL:** Use superpowers:subagent-driven-development
-- Stay in this session
-- Fresh subagent per task + code review
+1. Write state file to `docs/plans/.pending-execution.json`:
+   ```json
+   {
+     "planPath": "<the-plan-path-you-just-saved>",
+     "skill": "subagent-driven-development",
+     "createdAt": "<current-ISO-timestamp>"
+   }
+   ```
+2. Display this handoff message:
+
+   "Ready for fresh-context execution.
+
+   Run these two commands:
+   1. `/clear` - Reset context
+   2. `/launch-execution` - Start implementation
+
+   The plan path has been saved. After `/clear`, you'll be reminded to run `/launch-execution`."
+
+3. **Stop here** - Do NOT invoke subagent-driven-development in this session (context is exhausted)
 
 **If Parallel Session chosen:**
 - Guide them to open new session in worktree
