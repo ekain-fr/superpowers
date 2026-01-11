@@ -147,6 +147,8 @@ If yes:
 git worktree remove <worktree-path>
 ```
 
+**Never use `--force`** - if removal fails, the worktree has uncommitted changes or other issues that need manual resolution.
+
 **For Option 3:** Keep worktree.
 
 ## Quick Reference
@@ -176,6 +178,10 @@ git worktree remove <worktree-path>
 - **Problem:** Accidentally delete work
 - **Fix:** Require typed "discard" confirmation
 
+**Using --force on worktree removal**
+- **Problem:** Forces removal even when worktree has uncommitted work
+- **Fix:** Never use --force; resolve underlying issue manually if removal fails
+
 ## Red Flags
 
 **Never:**
@@ -183,6 +189,7 @@ git worktree remove <worktree-path>
 - Merge without verifying tests on result
 - Delete work without confirmation
 - Force-push without explicit request
+- Use `--force` with `git worktree remove` (blocked by Safety Net)
 
 **Always:**
 - Verify tests before offering options
