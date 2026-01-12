@@ -142,9 +142,25 @@ Check if in worktree:
 git worktree list | grep $(git branch --show-current)
 ```
 
-If yes:
+If yes, navigate out if needed, then remove:
 ```bash
-git worktree remove <worktree-path>
+CURRENT_DIR="$(pwd)"
+WORKTREE_PATH="<worktree-path>"
+
+# Navigate out if inside the worktree
+if [[ "$CURRENT_DIR" == "$WORKTREE_PATH"* ]]; then
+  RELATIVE_PATH="${CURRENT_DIR#$WORKTREE_PATH}"
+  REPO_ROOT="$(git worktree list | head -1 | awk '{print $1}')"
+  TARGET_PATH="$REPO_ROOT$RELATIVE_PATH"
+  if [ -d "$TARGET_PATH" ]; then
+    cd "$TARGET_PATH"
+  else
+    cd "$REPO_ROOT"
+  fi
+fi
+
+# Now safe to remove
+git worktree remove "$WORKTREE_PATH"
 ```
 
 **Never use `--force`** - if removal fails, the worktree has uncommitted changes or other issues that need manual resolution.
