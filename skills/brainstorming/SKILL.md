@@ -32,12 +32,32 @@ Start by understanding the current project context, then ask questions one at a 
 - Cover: architecture, components, data flow, error handling, testing
 - Be ready to go back and clarify if something doesn't make sense
 
+**Testing strategy (gather during design):**
+- Ask: "What user flows should work end-to-end after this feature?"
+- Ask: "What existing functionality might this change affect?"
+- Ask: "Max fix iterations for automated testing? (recommend 3, range 3-5)"
+- Document answers in design under "## Testing Strategy" section
+
 ## After the Design
 
 **Documentation:**
 - Write the validated design to `docs/plans/YYYY-MM-DD-<topic>-design.md`
 - Use elements-of-style:writing-clearly-and-concisely skill if available
 - Commit the design document to git
+- Include Testing Strategy section in design document:
+
+```markdown
+## Testing Strategy
+
+### Final Testing Scenarios
+1. [Scenario]: [What to test] → [Expected outcome]
+
+### Impacted Modules
+- `path/to/module` - [Why impacted]
+
+### Testing Configuration
+- Max fix iterations: [N]
+```
 
 **Implementation (if continuing):**
 - Ask: "Ready to set up for implementation?"
