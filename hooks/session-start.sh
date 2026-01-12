@@ -16,7 +16,8 @@ fi
 
 # Check for pending execution state file
 pending_execution_message=""
-pending_file="docs/plans/.pending-execution.json"
+project_dir="${CLAUDE_PROJECT_DIR:-$(pwd)}"
+pending_file="${project_dir}/docs/plans/.pending-execution.json"
 if [ -f "$pending_file" ]; then
     # Try jq first, fall back to grep/sed
     if command -v jq >/dev/null 2>&1; then

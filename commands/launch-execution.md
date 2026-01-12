@@ -6,14 +6,16 @@ disable-model-invocation: true
 Check for a pending execution state file at `docs/plans/.pending-execution.json` in the current working directory.
 
 **If the file exists:**
-1. Read the file and extract the `planPath` and `skill` fields
-2. Delete the state file (cleanup before proceeding)
-3. Announce: "Launching execution of [planPath] using [skill]"
-4. Invoke the skill specified in the `skill` field (e.g., `superpowers:subagent-driven-development`) with the plan path
+1. Read the file and extract `projectRoot`, `planPath`, and `skill` fields
+2. Construct the absolute plan path: `<projectRoot>/<planPath>`
+3. Delete the state file (cleanup before proceeding)
+4. Announce: "Launching execution of [absolute-plan-path] using [skill]"
+5. Invoke the skill specified in the `skill` field (e.g., `superpowers:subagent-driven-development`) with the absolute plan path
 
 **Example state file content:**
 ```json
 {
+  "projectRoot": "/Users/example/my-project",
   "planPath": "docs/plans/2026-01-11-feature-implementation.md",
   "skill": "subagent-driven-development",
   "createdAt": "2026-01-11T15:30:00Z"
