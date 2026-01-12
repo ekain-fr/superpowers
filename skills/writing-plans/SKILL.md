@@ -125,7 +125,7 @@ After saving the plan, offer execution choice:
    1. `/clear` - Reset context
    2. `/launch-subagents-execution` - Start implementation"
 
-3. **Stop here** - Do NOT invoke subagent-driven-development in this session (context is exhausted)
+3. **Stop here** - Do NOT invoke subagent-driven-development in this session; the user will launch execution in a new session with fresh context.
 
 **If Parallel Session chosen:**
 - Guide them to open new session in worktree
