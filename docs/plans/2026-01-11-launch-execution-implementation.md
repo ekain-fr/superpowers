@@ -2,22 +2,22 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development to implement this plan task-by-task.
 
-**Goal:** Enable fresh-context execution by preserving plan path across `/clear` via state file and `/launch-execution` command.
+**Goal:** Enable fresh-context execution by preserving plan path across `/clear` via state file and `/launch-subagents-execution` command.
 
-**Architecture:** State file in `docs/plans/.pending-execution.json` written by writing-plans skill, detected by SessionStart hook (which shows reminder), consumed and deleted by `/launch-execution` command.
+**Architecture:** State file in `docs/plans/.pending-execution.json` written by writing-plans skill, detected by SessionStart hook (which shows reminder), consumed and deleted by `/launch-subagents-execution` command.
 
 **Tech Stack:** Bash (hooks), Markdown (commands/skills), JSON (state file)
 
 ---
 
-## Task 1: Create /launch-execution Command
+## Task 1: Create /launch-subagents-execution Command
 
 **Files:**
-- Create: `commands/launch-execution.md`
+- Create: `commands/launch-subagents-execution.md`
 
 **Step 1: Create the command file**
 
-Create `commands/launch-execution.md` with this exact content:
+Create `commands/launch-subagents-execution.md` with this exact content:
 
 ```markdown
 ---
@@ -50,7 +50,7 @@ Display this error message:
 To queue an execution:
 1. Run `/brainstorm` or `/write-plan` to create an implementation plan
 2. Choose 'Subagent-Driven' when prompted for execution approach
-3. Run `/clear` then `/launch-execution`
+3. Run `/clear` then `/launch-subagents-execution`
 
 Or invoke directly:
 `/superpowers:subagent-driven-development docs/plans/<your-plan>.md`"
@@ -60,7 +60,7 @@ Or invoke directly:
 
 Run:
 ```bash
-cat commands/launch-execution.md
+cat commands/launch-subagents-execution.md
 ```
 
 Expected: File contents match above with YAML frontmatter and instruction body.
@@ -68,8 +68,8 @@ Expected: File contents match above with YAML frontmatter and instruction body.
 **Step 3: Commit**
 
 ```bash
-git add commands/launch-execution.md
-git commit -m "feat: add /launch-execution command for fresh-context execution"
+git add commands/launch-subagents-execution.md
+git commit -m "feat: add /launch-subagents-execution command for fresh-context execution"
 ```
 
 ---
@@ -98,7 +98,7 @@ if [ -f "$pending_file" ]; then
     fi
 
     if [ -n "$plan_path" ] && [ "$plan_path" != "null" ]; then
-        pending_execution_message="\n\n<pending-execution>\nA plan is queued for execution: ${plan_path}\nRun /launch-execution to start implementation with fresh context.\n</pending-execution>"
+        pending_execution_message="\n\n<pending-execution>\nA plan is queued for execution: ${plan_path}\nRun /launch-subagents-execution to start implementation with fresh context.\n</pending-execution>"
     fi
 fi
 ```
@@ -198,9 +198,9 @@ With:
 
    Run these two commands:
    1. `/clear` - Reset context
-   2. `/launch-execution` - Start implementation
+   2. `/launch-subagents-execution` - Start implementation
 
-   The plan path has been saved. After `/clear`, you'll be reminded to run `/launch-execution`."
+   The plan path has been saved. After `/clear`, you'll be reminded to run `/launch-subagents-execution`."
 
 3. **Stop here** - Do NOT invoke subagent-driven-development in this session (context is exhausted)
 ```
@@ -288,7 +288,7 @@ Expected: `PASS: Hook detects state file`
 
 Run:
 ```bash
-ls -la commands/launch-execution.md && echo "PASS: Command file exists"
+ls -la commands/launch-subagents-execution.md && echo "PASS: Command file exists"
 ```
 
 Expected: `PASS: Command file exists`

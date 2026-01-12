@@ -123,9 +123,9 @@ After saving the plan, offer execution choice:
 
    Run these two commands:
    1. `/clear` - Reset context
-   2. `/launch-execution` - Start implementation
+   2. `/launch-subagents-execution` - Start implementation
 
-   The plan path has been saved. After `/clear`, you'll be reminded to run `/launch-execution`."
+   The plan path has been saved. After `/clear`, you'll be reminded to run `/launch-subagents-execution`."
 
 3. **Stop here** - Do NOT invoke subagent-driven-development in this session (context is exhausted)
 

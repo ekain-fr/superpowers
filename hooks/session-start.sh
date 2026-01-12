@@ -28,7 +28,7 @@ if [ -f "$pending_file" ]; then
     fi
 
     if [ -n "$plan_path" ] && [ "$plan_path" != "null" ]; then
-        pending_execution_message="\n\n<pending-execution>\nA plan is queued for execution: ${plan_path}\nRun /launch-execution to start implementation with fresh context.\n</pending-execution>"
+        pending_execution_message="\n\n<pending-execution>\nA plan is queued for execution: ${plan_path}\nRun /launch-subagents-execution to start implementation with fresh context.\n</pending-execution>"
     fi
 fi
 
