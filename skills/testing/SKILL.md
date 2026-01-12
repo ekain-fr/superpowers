@@ -200,6 +200,17 @@ These failures could not be auto-resolved after [N] fix iterations.
 | Subagent fix fails | Captured in next iteration's report |
 | User cancels mid-testing | State preserved, resume with `/testing` |
 
+## Common Rationalizations
+
+| Excuse | Reality |
+|--------|---------|
+| "TDD already covered this" | TDD covers unit tests. Integration, e2e, and regression are separate phases. |
+| "Implementation tasks are complete" | Implementation completion triggers testing, not skipping it. |
+| "All tests passing" (ran only one category) | Must run ALL three categories: integration, e2e, regression. |
+| "Minor failures can be addressed in follow-up" | Fix loop exists for this. Run it. No deferring failures. |
+| "Tests were already run during development" | Testing phase writes NEW tests specified in plan, then runs all. |
+| "Testing plan exists, so testing was considered" | Existence ≠ execution. Read plan, extract details, execute tests. |
+
 ## Red Flags
 
 **Never:**
