@@ -59,6 +59,7 @@ digraph process {
     "Read plan, extract all tasks with full text, note context, create TodoWrite" [shape=box];
     "More tasks remain?" [shape=diamond];
     "Dispatch final code reviewer subagent for entire implementation" [shape=box];
+    "Use superpowers:testing" [shape=box style=filled fillcolor=lightyellow];
     "Use superpowers:finishing-a-development-branch" [shape=box style=filled fillcolor=lightgreen];
 
     "Read plan, extract all tasks with full text, note context, create TodoWrite" -> "Dispatch implementer subagent (./implementer-prompt.md)";
@@ -78,7 +79,8 @@ digraph process {
     "Mark task complete in TodoWrite" -> "More tasks remain?";
     "More tasks remain?" -> "Dispatch implementer subagent (./implementer-prompt.md)" [label="yes"];
     "More tasks remain?" -> "Dispatch final code reviewer subagent for entire implementation" [label="no"];
-    "Dispatch final code reviewer subagent for entire implementation" -> "Use superpowers:finishing-a-development-branch";
+    "Dispatch final code reviewer subagent for entire implementation" -> "Use superpowers:testing";
+    "Use superpowers:testing" -> "Use superpowers:finishing-a-development-branch";
 }
 ```
 
@@ -87,6 +89,15 @@ digraph process {
 - `./implementer-prompt.md` - Dispatch implementer subagent
 - `./spec-reviewer-prompt.md` - Dispatch spec compliance reviewer subagent
 - `./code-quality-reviewer-prompt.md` - Dispatch code quality reviewer subagent
+
+## Testing Phase
+
+After final code review, before finishing-branch:
+- **REQUIRED SUB-SKILL:** Use superpowers:testing
+- Executes testing plan from `docs/plans/YYYY-MM-DD-<feature>-testing.md`
+- Runs integration, e2e, and regression tests
+- Auto-dispatches fixes for failures
+- Loops until pass or max iterations
 
 ## Example Workflow
 
@@ -161,6 +172,14 @@ Code reviewer: ✅ Approved
 [Dispatch final code-reviewer]
 Final reviewer: All requirements met, ready to merge
 
+[Use superpowers:testing]
+
+Testing: Running integration tests... 4/4 pass
+Testing: Running e2e tests... 2/2 pass
+Testing: Running regression tests... 18/18 pass
+Testing: All tests pass. Proceeding to finish branch.
+
+[Use superpowers:finishing-a-development-branch]
 Done!
 ```
 
@@ -231,6 +250,7 @@ Done!
 **Required workflow skills:**
 - **superpowers:writing-plans** - Creates the plan this skill executes
 - **superpowers:requesting-code-review** - Code review template for reviewer subagents
+- **superpowers:testing** - Validates implementation before finishing
 - **superpowers:finishing-a-development-branch** - Complete development after all tasks
 
 **Subagents should use:**
