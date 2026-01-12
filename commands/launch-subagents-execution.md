@@ -30,7 +30,7 @@ Display this error message:
 To queue an execution:
 1. Run `/brainstorm` or `/write-plan` to create an implementation plan
 2. Choose 'Subagent-Driven' when prompted for execution approach
-3. Run `/clear` then `/launch-execution`
+3. Run `/clear` then `/launch-subagents-execution`
 
 Or invoke directly:
 `/superpowers:subagent-driven-development docs/plans/<your-plan>.md`"

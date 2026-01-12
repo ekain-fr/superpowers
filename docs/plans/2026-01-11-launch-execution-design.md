@@ -17,7 +17,7 @@ A two-command flow that preserves the plan path across `/clear`:
 
 1. **After planning:** Claude writes a state file with the plan path
 2. **User runs `/clear`:** Fresh context, SessionStart hook reminds about pending execution
-3. **User runs `/launch-execution`:** Reads state file, invokes skill, deletes state file
+3. **User runs `/launch-subagents-execution`:** Reads state file, invokes skill, deletes state file
 
 ## Components
 
@@ -37,7 +37,7 @@ A two-command flow that preserves the plan path across `/clear`:
 **Lifecycle:**
 - Created by `writing-plans` skill when user chooses Subagent-Driven
 - Read by SessionStart hook (for reminder message)
-- Read and deleted by `/launch-execution` command
+- Read and deleted by `/launch-subagents-execution` command
 
 **Gitignore:** Should be added to project's `.gitignore` (transient workflow state).
 
@@ -63,9 +63,9 @@ A two-command flow that preserves the plan path across `/clear`:
 
    Run these two commands:
    1. `/clear` - Reset context
-   2. `/launch-execution` - Start implementation
+   2. `/launch-subagents-execution` - Start implementation
 
-   The plan path has been saved. After `/clear`, you'll be reminded to run `/launch-execution`."
+   The plan path has been saved. After `/clear`, you'll be reminded to run `/launch-subagents-execution`."
 
 3. Stop here (do not invoke subagent-driven-development in this session)
 ```
@@ -92,7 +92,7 @@ if [ -f "$PENDING_FILE" ]; then
         echo ""
         echo "<pending-execution>"
         echo "A plan is queued for execution: $PLAN_PATH"
-        echo "Run /launch-execution to start implementation with fresh context."
+        echo "Run /launch-subagents-execution to start implementation with fresh context."
         echo "</pending-execution>"
     fi
 fi
@@ -100,9 +100,9 @@ fi
 
 **Platform support:** Uses bash with Git Bash assumed for Windows. The grep/sed fallback handles systems without jq.
 
-### New Command: /launch-execution
+### New Command: /launch-subagents-execution
 
-**File:** `commands/launch-execution.md`
+**File:** `commands/launch-subagents-execution.md`
 
 ```markdown
 ---
@@ -126,7 +126,7 @@ Display this error message:
 To queue an execution:
 1. Run /brainstorm or /write-plan to create an implementation plan
 2. Choose 'Subagent-Driven' when prompted
-3. Run /clear then /launch-execution
+3. Run /clear then /launch-subagents-execution
 
 Or invoke directly:
 /superpowers:subagent-driven-development docs/plans/<your-plan>.md"
@@ -142,13 +142,13 @@ Or invoke directly:
    └─> User chooses: Subagent-Driven
 
 3. Claude: Writes .pending-execution.json
-   └─> "Run /clear then /launch-execution"
+   └─> "Run /clear then /launch-subagents-execution"
 
 4. User: /clear
    └─> Fresh context
-   └─> SessionStart hook: "Plan queued. Run /launch-execution"
+   └─> SessionStart hook: "Plan queued. Run /launch-subagents-execution"
 
-5. User: /launch-execution
+5. User: /launch-subagents-execution
    └─> Reads + deletes state file
    └─> Invokes subagent-driven-development with plan path
    └─> Execution begins with full context budget
@@ -158,15 +158,15 @@ Or invoke directly:
 
 | Scenario | What happens |
 |----------|--------------|
-| User runs `/launch-execution` | State file deleted, execution starts |
-| User runs `/clear` but not `/launch-execution` | State file remains, reminder shown on next clear |
+| User runs `/launch-subagents-execution` | State file deleted, execution starts |
+| User runs `/clear` but not `/launch-subagents-execution` | State file remains, reminder shown on next clear |
 | User starts new brainstorm cycle | State file overwritten with new plan |
-| User manually deletes state file | No reminder, `/launch-execution` shows helpful error |
+| User manually deletes state file | No reminder, `/launch-subagents-execution` shows helpful error |
 
 ## Files Changed
 
 **Create:**
-- `commands/launch-execution.md`
+- `commands/launch-subagents-execution.md`
 
 **Modify:**
 - `skills/writing-plans/SKILL.md`
