@@ -40,12 +40,11 @@ digraph testing_process {
     execute -> report;
     report -> check;
     check -> complete [label="yes"];
-    check -> dispatch [label="no"];
-    dispatch -> retest;
-    retest -> report;
-    report -> maxcheck [label="failures remain"];
+    check -> maxcheck [label="no"];
     maxcheck -> dispatch [label="yes"];
     maxcheck -> human [label="no"];
+    dispatch -> retest;
+    retest -> report;
     human -> complete [label="proceed"];
     human -> block [label="block"];
 }
