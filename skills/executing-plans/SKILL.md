@@ -42,9 +42,23 @@ Based on feedback:
 - Execute next batch
 - Repeat until complete
 
-### Step 5: Complete Development
+### Step 5: Run Testing Phase
 
-After all tasks complete and verified:
+After all implementation tasks complete and verified:
+- Announce: "I'm using the testing skill to validate the implementation."
+- **REQUIRED SUB-SKILL:** Use superpowers:testing
+- Testing plan location: `docs/plans/YYYY-MM-DD-<feature>-testing.md`
+
+**If testing completes (all pass or proceed-with-warnings):**
+- Continue to Step 6
+
+**If testing blocks (user chose Block at max iterations):**
+- Stop execution
+- Report: "Testing blocked. Fix remaining issues and re-run `/testing`."
+
+### Step 6: Complete Development
+
+After testing phase completes:
 - Announce: "I'm using the finishing-a-development-branch skill to complete this work."
 - **REQUIRED SUB-SKILL:** Use superpowers:finishing-a-development-branch
 - Follow that skill to verify tests, present options, execute choice
