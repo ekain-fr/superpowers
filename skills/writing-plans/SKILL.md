@@ -44,6 +44,64 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 ---
 ```
 
+## Testing Plan Generation
+
+**Generate alongside implementation plan:** `docs/plans/YYYY-MM-DD-<feature>-testing.md`
+
+**Testing plan header:**
+
+```markdown
+# [Feature Name] Testing Plan
+
+> **For Claude:** REQUIRED SUB-SKILL: Use superpowers:testing to execute this plan.
+
+**Goal:** [One sentence describing what testing validates]
+
+**Max Fix Iterations:** [N from design doc]
+
+**Source Design:** `docs/plans/YYYY-MM-DD-<feature>-design.md`
+
+---
+```
+
+**Testing plan structure:**
+
+```markdown
+## Integration Tests
+
+### Test 1: [Component interaction being tested]
+**Files:**
+- Create: `tests/integration/path/to/test.py`
+
+**Step 1: Write the test**
+[Complete test code]
+
+**Step 2: Run test**
+Run: [exact command]
+Expected: PASS
+
+---
+
+## End-to-End Tests
+
+### Test 1: [User flow being tested]
+[Same structure as integration tests]
+
+---
+
+## Regression Tests
+
+### Module: `path/to/impacted/module`
+**Reason:** [Why this module might be affected]
+
+**Step 1: Identify existing tests**
+Run: [command to find tests]
+
+**Step 2: Run regression suite**
+Run: [exact command]
+Expected: All PASS
+```
+
 ## Task Structure
 
 ```markdown
@@ -96,9 +154,13 @@ git commit -m "feat: add specific feature"
 
 ## Execution Handoff
 
-After saving the plan, offer execution choice:
+After saving both plans, offer execution choice:
 
-**"Plan complete and saved to `docs/plans/<filename>.md`. Two execution options:**
+**"Plans complete and saved:**
+- Implementation: `docs/plans/<filename>.md`
+- Testing: `docs/plans/<filename>-testing.md`
+
+**Two execution options:**
 
 **1. Subagent-Driven (this session)** - I dispatch fresh subagent per task, review between tasks, fast iteration
 
