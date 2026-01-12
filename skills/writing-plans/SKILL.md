@@ -110,11 +110,13 @@ After saving the plan, offer execution choice:
 1. Write state file to `docs/plans/.pending-execution.json`:
    ```json
    {
+     "projectRoot": "<absolute-path-to-current-working-directory>",
      "planPath": "<the-plan-path-you-just-saved>",
      "skill": "subagent-driven-development",
      "createdAt": "<current-ISO-timestamp>"
    }
    ```
+   **Important:** `projectRoot` must be the absolute path to the current working directory (use cwd). This ensures the plan can be found after `/clear`.
 2. Display this handoff message:
 
    "Ready for fresh-context execution.
