@@ -53,7 +53,7 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 ```markdown
 # [Feature Name] Testing Plan
 
-> **For Claude:** REQUIRED SUB-SKILL: Use superpowers:testing to execute this plan.
+> **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-tests to execute this plan.
 
 **Goal:** [One sentence describing what testing validates]
 

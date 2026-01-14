@@ -1,5 +1,5 @@
 ---
-name: testing
+name: executing-tests
 description: Use when implementation is complete and you need to run integration tests, e2e tests, and regression tests before finishing the branch
 ---
 
@@ -178,7 +178,7 @@ Max fix iterations ([N]) reached. [M] tests still failing.
 Which option?
 ```
 
-**If Block:** Stop. User fixes manually. Re-invoke `/testing` when ready.
+**If Block:** Stop. User fixes manually. Re-invoke `/executing-tests` when ready.
 
 **If Proceed:** Pass failure summary to finishing-a-development-branch for inclusion in PR body:
 
@@ -197,7 +197,7 @@ These failures could not be auto-resolved after [N] fix iterations.
 | No failures on first run | Skip fix loop, proceed to completion |
 | Fix introduces new failures | Caught by re-running ALL tests |
 | Subagent fix fails | Captured in next iteration's report |
-| User cancels mid-testing | State preserved, resume with `/testing` |
+| User cancels mid-testing | State preserved, resume with `/executing-tests` |
 
 ## Common Rationalizations
 

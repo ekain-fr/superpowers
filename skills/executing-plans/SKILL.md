@@ -46,7 +46,7 @@ Based on feedback:
 
 After all implementation tasks complete and verified:
 - Announce: "I'm using the testing skill to validate the implementation."
-- **REQUIRED SUB-SKILL:** Use superpowers:testing
+- **REQUIRED SUB-SKILL:** Use superpowers:executing-tests
 - Testing plan location: `docs/plans/YYYY-MM-DD-<feature>-testing.md`
 
 **If testing completes (all pass or proceed-with-warnings):**
@@ -54,7 +54,7 @@ After all implementation tasks complete and verified:
 
 **If testing blocks (user chose Block at max iterations):**
 - Stop execution
-- Report: "Testing blocked. Fix remaining issues and re-run `/testing`."
+- Report: "Testing blocked. Fix remaining issues and re-run `/executing-tests`."
 
 ### Step 6: Complete Development
 

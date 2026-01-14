@@ -2,7 +2,7 @@
 
 **Test Date:** 2026-01-12
 **Scenario:** Post-implementation, testing plan exists, proceed to finishing-branch
-**Skill Loaded:** superpowers:testing
+**Skill Loaded:** superpowers:executing-tests
 
 ---
 

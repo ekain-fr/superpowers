@@ -24,7 +24,7 @@ brainstorming → writing-plans → executing-plans → testing → finishing-br
 ```
 
 **Files affected:**
-- **Create:** `skills/testing/SKILL.md` - new testing phase skill
+- **Create:** `skills/executing-tests/SKILL.md` - new testing phase skill
 - **Modify:** `skills/brainstorming/SKILL.md` - add testing sections to design output
 - **Modify:** `skills/writing-plans/SKILL.md` - generate testing plan file
 - **Modify:** `skills/executing-plans/SKILL.md` - call testing skill before finishing-branch
@@ -72,7 +72,7 @@ After design sections (architecture, components, data flow, error handling), bef
 ```markdown
 # [Feature Name] Testing Plan
 
-> **For Claude:** REQUIRED SUB-SKILL: Use superpowers:testing to execute this plan.
+> **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-tests to execute this plan.
 
 **Goal:** [One sentence describing what testing validates]
 
@@ -133,7 +133,7 @@ Expected: All PASS
 
 ## New Testing Skill - Core Process
 
-**File:** `skills/testing/SKILL.md`
+**File:** `skills/executing-tests/SKILL.md`
 
 **Trigger:** Called by executing-plans after all implementation tasks complete, before finishing-branch.
 
@@ -328,7 +328,7 @@ These failures could not be auto-resolved after 3 fix iterations.
 
 After all implementation tasks complete and verified:
 - Announce: "I'm using the testing skill to validate the implementation."
-- **REQUIRED SUB-SKILL:** Use superpowers:testing
+- **REQUIRED SUB-SKILL:** Use superpowers:executing-tests
 - Pass testing plan path: `docs/plans/YYYY-MM-DD-<feature>-testing.md`
 
 **If testing completes (all pass or proceed-with-warnings):**
@@ -336,7 +336,7 @@ After all implementation tasks complete and verified:
 
 **If testing blocks:**
 - Stop execution
-- Report: "Testing blocked. Fix remaining issues and re-run /testing."
+- Report: "Testing blocked. Fix remaining issues and re-run /executing-tests."
 
 ### Step 6: Complete Development
 (formerly Step 5 - unchanged)
@@ -352,7 +352,7 @@ Also update `subagent-driven-development` similarly.
 2. **No failures on first run** - Skip fix loop, proceed to completion
 3. **Fix introduces new failures** - Caught by re-running ALL tests
 4. **Subagent fix fails** - Captured in next test run's report
-5. **User cancels mid-testing** - State preserved, resume with `/testing`
+5. **User cancels mid-testing** - State preserved, resume with `/executing-tests`
 
 ---
 

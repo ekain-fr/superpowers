@@ -6,7 +6,7 @@ This is the GREEN phase of TDD for the testing skill. We run the same scenario a
 
 ## Setup
 
-Load skill: `superpowers:testing`
+Load skill: `superpowers:executing-tests`
 
 ## Scenario
 

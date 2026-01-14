@@ -86,7 +86,7 @@ After the "Plan Document Header" section, add new section:
 ```markdown
 # [Feature Name] Testing Plan
 
-> **For Claude:** REQUIRED SUB-SKILL: Use superpowers:testing to execute this plan.
+> **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-tests to execute this plan.
 
 **Goal:** [One sentence describing what testing validates]
 
@@ -423,7 +423,7 @@ Max fix iterations ([N]) reached. [M] tests still failing.
 Which option?
 ```
 
-**If Block:** Stop. User fixes manually. Re-invoke `/testing` when ready.
+**If Block:** Stop. User fixes manually. Re-invoke `/executing-tests` when ready.
 
 **If Proceed:** Pass failure summary to finishing-a-development-branch for inclusion in PR body:
 
@@ -442,7 +442,7 @@ These failures could not be auto-resolved after [N] fix iterations.
 | No failures on first run | Skip fix loop, proceed to completion |
 | Fix introduces new failures | Caught by re-running ALL tests |
 | Subagent fix fails | Captured in next iteration's report |
-| User cancels mid-testing | State preserved, resume with `/testing` |
+| User cancels mid-testing | State preserved, resume with `/executing-tests` |
 
 ## Red Flags
 
@@ -499,7 +499,7 @@ Create `tests/claude-code/test-testing-skill-verify.md`:
 # Testing Skill Verification Test
 
 ## Setup
-Load skill: superpowers:testing
+Load skill: superpowers:executing-tests
 
 ## Scenario
 [Same scenario as baseline test]
@@ -610,7 +610,7 @@ Add new Step 5:
 
 After all implementation tasks complete and verified:
 - Announce: "I'm using the testing skill to validate the implementation."
-- **REQUIRED SUB-SKILL:** Use superpowers:testing
+- **REQUIRED SUB-SKILL:** Use superpowers:executing-tests
 - Testing plan location: `docs/plans/YYYY-MM-DD-<feature>-testing.md`
 
 **If testing completes (all pass or proceed-with-warnings):**
@@ -618,7 +618,7 @@ After all implementation tasks complete and verified:
 
 **If testing blocks (user chose Block at max iterations):**
 - Stop execution
-- Report: "Testing blocked. Fix remaining issues and re-run `/testing`."
+- Report: "Testing blocked. Fix remaining issues and re-run `/executing-tests`."
 ```
 
 **Step 3: Update Step 6 header**
@@ -653,13 +653,13 @@ In the process flowchart, insert testing phase between "Dispatch final code revi
 
 Add new node:
 ```dot
-"Use superpowers:testing" [shape=box style=filled fillcolor=lightyellow];
+"Use superpowers:executing-tests" [shape=box style=filled fillcolor=lightyellow];
 ```
 
 Update edges:
 ```dot
-"Dispatch final code reviewer subagent for entire implementation" -> "Use superpowers:testing";
-"Use superpowers:testing" -> "Use superpowers:finishing-a-development-branch";
+"Dispatch final code reviewer subagent for entire implementation" -> "Use superpowers:executing-tests";
+"Use superpowers:executing-tests" -> "Use superpowers:finishing-a-development-branch";
 ```
 
 **Step 3: Add testing phase description**
@@ -670,7 +670,7 @@ After the flowchart, before "Example Workflow", add:
 ## Testing Phase
 
 After final code review, before finishing-branch:
-- **REQUIRED SUB-SKILL:** Use superpowers:testing
+- **REQUIRED SUB-SKILL:** Use superpowers:executing-tests
 - Executes testing plan from `docs/plans/YYYY-MM-DD-<feature>-testing.md`
 - Runs integration, e2e, and regression tests
 - Auto-dispatches fixes for failures
@@ -683,7 +683,7 @@ Add testing phase to the example between final review and "Done!":
 
 ```markdown
 [After final review]
-[Use superpowers:testing]
+[Use superpowers:executing-tests]
 
 Testing: Running integration tests... 4/4 pass
 Testing: Running e2e tests... 2/2 pass
@@ -698,7 +698,7 @@ Done!
 
 Add to "Required workflow skills":
 ```markdown
-- **superpowers:testing** - Validates implementation before finishing
+- **superpowers:executing-tests** - Validates implementation before finishing
 ```
 
 **Step 6: Verify changes**
@@ -738,7 +738,7 @@ head -10 skills/subagent-driven-development/SKILL.md
 **Step 3: Verify no broken cross-references**
 
 Check that skill references are correct:
-- `superpowers:testing` is referenced correctly
+- `superpowers:executing-tests` is referenced correctly
 - `superpowers:finishing-a-development-branch` references unchanged
 
 **Step 4: Commit any fixes**
